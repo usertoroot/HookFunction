@@ -40,7 +40,7 @@ Currently not supported.
 Usage
 -----
 
-The **HookFunction** program consists out of a executable and a dll. The executable will inject the dll into the remote process and invoke the dll functions with the specified parameters. The dll will then load the required dll's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection. Currently te hooking of any **cdecl**, **thiscall** and **stdcall** function is supported.
+The **HookFunction** program consists out of a executable and a dll. The executable will inject the dll into the remote process and invoke the dll functions with the specified parameters. The dll will then load the required dll's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection. Currently the hooking of any **cdecl**, **thiscall** and **stdcall** function is supported.
 
 Example
 -------

@@ -40,7 +40,51 @@ Currently not supported.
 Usage
 -----
 
-To use the **HookFunction** program 
+The **HookFunction** program consists out of a executable and a dll. The executable will inject the dll into the remote process and invoke the dll functions with the specified parameters. The dll will then load the required dll's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection. Currently hooking of any **cdecl**, **thiscall** and **stdcall** is supported.
+
+Examples
+--------
+
+The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. Then the path containing of the dll containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
+
+```
+HookFunction InterceptMe.exe 0x11177 "X:\...\HookInterceptMe.dll" ProxyRC4
+```
+
+An example proxy dll is shown below:
+
+```c
+#include <Windows.h>
+#include <stdio.h>
+#include <map>
+
+//A map containing the mapping of the proxy function address to the original function address
+std::map<void*, void*> _originalFunctionMap;
+
+//The proxy function
+extern "C" _declspec(dllexport) void ProxyRC4(const char* input, int inputLength, const char* key, int keyLength, char* output)
+{
+	printf("InterceptMe called ProxyRC4(%s, %i, %s, %i, %08X)\r\n", input, inputLength, key, keyLength, output);
+
+	//Call the original function
+	std::map<void*, void*>::iterator itr = _originalFunctionMap.find((void*)&ProxyRC4);
+	if (itr != _originalFunctionMap.end())
+		((void (*)(const char*, int, const char*, int, char*))itr->second)(input, inputLength, key, keyLength, output);
+}
+
+//Gets invoked to map the proxy function addres to the original function address
+extern "C" _declspec(dllexport) void SetOriginalFunctionMapping(void* from, void* to)
+{
+	_originalFunctionMap[from] = to;
+}
+
+BOOL WINAPI DllMain(HINSTANCE module_handle, DWORD reason_for_call, LPVOID reserved)
+{
+	return TRUE;
+}
+```
+
+Every time the **RC4** function in the program will be invoked our program will intercept the code flow. This allows us to do tampering before encryption and after decryption.
 
 
 Additional Notes

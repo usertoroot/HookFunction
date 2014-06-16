@@ -1,4 +1,4 @@
-Welcome to HookFunction
+hWelcome to HookFunction
 =======================
 
 This is the source code page for the **HookFunction**.  With the source code, you can modify the tool in any way imaginable and share your changes with others!
@@ -40,18 +40,18 @@ Currently not supported.
 Usage
 -----
 
-The **HookFunction** program consists out of a executable and a dll. The executable will inject the dll into the remote process and invoke the dll functions with the specified parameters. The dll will then load the required dll's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection. Currently the hooking of any **cdecl**, **thiscall** and **stdcall** function is supported.
+The **HookFunction** program consists out of a executable and a DLL. The executable will inject the DLL into the remote process and invoke the DLL functions with the specified parameters. The DLL will then load the required DLL's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection. Currently the hooking of any **cdecl**, **thiscall** and **stdcall** function is supported.
 
 Example
 -------
 
-The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. Then the path to the dll containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
+The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. Then the path to the DLL containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
 
 ```
-HookFunction InterceptMe.exe 0x11177 "X:\...\HookInterceptMe.dll" ProxyRC4
+HookFunction InterceptMe.exe 0x11177 "X:\...\HookInterceptMe.DLL" ProxyRC4
 ```
 
-An example proxy dll is shown below:
+An example proxy DLL is shown below:
 
 ```c
 #include <Windows.h>
@@ -62,7 +62,7 @@ An example proxy dll is shown below:
 std::map<void*, void*> _originalFunctionMap;
 
 //The proxy function
-extern "C" _declspec(dllexport) void ProxyRC4(const char* input, int inputLength, const char* key, int keyLength, char* output)
+extern "C" _declspec(DLLexport) void ProxyRC4(const char* input, int inputLength, const char* key, int keyLength, char* output)
 {
 	printf("InterceptMe called ProxyRC4(%s, %i, %s, %i, %08X)\r\n", input, inputLength, key, keyLength, output);
 
@@ -73,7 +73,7 @@ extern "C" _declspec(dllexport) void ProxyRC4(const char* input, int inputLength
 }
 
 //Gets invoked to map the proxy function addres to the original function address
-extern "C" _declspec(dllexport) void SetOriginalFunctionMapping(void* from, void* to)
+extern "C" _declspec(DLLexport) void SetOriginalFunctionMapping(void* from, void* to)
 {
 	_originalFunctionMap[from] = to;
 }

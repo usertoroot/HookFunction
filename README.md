@@ -45,7 +45,7 @@ The **HookFunction** program consists out of a executable and a dll. The executa
 Example
 -------
 
-The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. Then the path containing of the dll containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
+The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. Then the path to the dll containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
 
 ```
 HookFunction InterceptMe.exe 0x11177 "X:\...\HookInterceptMe.dll" ProxyRC4
@@ -87,6 +87,11 @@ BOOL WINAPI DllMain(HINSTANCE module_handle, DWORD reason_for_call, LPVOID reser
 Every time the **RC4** function in the program will be invoked our program will intercept the code flow. This allows us to do tampering before encryption and after decryption.
 
 Using [HookPython](https://git.koenj.com/koenj/hookpython) it is possible to make python proxy functions. If you want to know more about this please visit the [HookPython](https://git.koenj.com/koenj/hookpython) page.
+
+Special Case
+------------
+
+The function name **PythonHook** is used as a keyword to detect when python hooking is requested.
 
 Additional Notes
 ----------------

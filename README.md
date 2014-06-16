@@ -1,4 +1,4 @@
-hWelcome to HookFunction
+Welcome to HookFunction
 =======================
 
 This is the source code page for the **HookFunction**.  With the source code, you can modify the tool in any way imaginable and share your changes with others!
@@ -40,7 +40,7 @@ Currently not supported.
 Usage
 -----
 
-The **HookFunction** program consists out of a executable and a DLL. The executable will inject the DLL into the remote process and invoke the DLL functions with the specified parameters. The DLL will then load the required DLL's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection. Currently the hooking of any **cdecl**, **thiscall** and **stdcall** function is supported.
+The **HookFunction** program consists out of a executable and a DLL. The executable will inject the DLL into the remote process and invoke the DLL functions with the specified parameters. The DLL will then load the required DLL's to execute the function specified through parameters. **HookFunction** is made to hook arbitrary functions and it allows for easy proxy function injection.
 
 Example
 -------
@@ -86,12 +86,12 @@ BOOL WINAPI DllMain(HINSTANCE module_handle, DWORD reason_for_call, LPVOID reser
 
 Every time the **RC4** function in the program will be invoked our program will intercept the code flow. This allows us to do tampering before encryption and after decryption.
 
-Using [HookPython](https://git.koenj.com/koenj/hookpython) it is possible to make python proxy functions. If you want to know more about this please visit the [HookPython](https://git.koenj.com/koenj/hookpython) page.
+Using [HookPython](https://git.koenj.com/koenj/hookpython) it is possible to make python proxy functions. If you want to know more please visit the [HookPython](https://git.koenj.com/koenj/hookpython) page.
 
 Special Case
 ------------
 
-The function name **PythonHook** is used as a keyword to detect when python hooking is requested.
+The function name **PythonHook** is used as a keyword to detect when python hooking is requested. If you want to know more please visit [HookPython](https://git.koenj.com/koenj/hookpython).
 
 Additional Notes
 ----------------
@@ -99,4 +99,3 @@ Additional Notes
 Visual Studio 2013 is strongly recommended for compiling.
 
 The first time you start the editor from a fresh source build, you may experience long load times.  This only happens on the first run.
-

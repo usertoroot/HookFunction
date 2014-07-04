@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <string>
 #include <iostream>
+#include <direct.h>
 
 typedef struct _HookInformation
 {
@@ -225,7 +226,10 @@ int main(int argc, const char* argv[])
 	if (hProcess == NULL)
 		return 5;
 
-	char* libraryPath = "D:\\Projects\\Werk\\HookFunction\\bin\\x86\\HookFunctionDll.dll";
+	char libraryPath[MAX_PATH];
+	_getcwd(libraryPath, sizeof(libraryPath));
+	strcat(libraryPath, "\\HookFunctionDll.dll");
+
 	DWORD hRemoteModule = GetModuleHandleInjection(hProcess, libraryPath);
 	if (hRemoteModule == NULL)
 		LoadLibraryInjection(hProcess, libraryPath);

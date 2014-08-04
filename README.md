@@ -45,10 +45,11 @@ The **HookFunction** program consists out of a executable and a DLL. The executa
 Example
 -------
 
-The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. Then the path to the DLL containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
+The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177** to InterceptMe.exe (second parameter). This relative virtual address indicates the address of the **RC4** cryptography function. Then the path to the DLL containing the proxy function is given. The last parameter is the name of the proxy function to invoke. The full command is shown below:
 
 ```
-HookFunction InterceptMe.exe 0x11177 "X:\...\HookInterceptMe.DLL" ProxyRC4
+HookFunction InterceptMe.exe InterceptMe.exe 0x11177 "X:\...\HookInterceptMe.DLL" ProxyRC4
+HookFunction Executable      Module          Offset  HookDll                      ProxyFunctionName
 ```
 
 An example proxy DLL is shown below:

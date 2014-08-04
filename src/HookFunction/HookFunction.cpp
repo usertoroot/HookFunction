@@ -193,9 +193,9 @@ int GetFunctionOffset(const char* libraryPath, const char* name)
 
 int main(int argc, const char* argv[])
 {
-	if (argc < 5)
+	if (argc < 6)
 	{
-		printf("Usage: hookfunction [executableName|pid] hookAddress libraryPath functionName\r\n");
+		printf("Usage: hookfunction [executableName|pid] moduleName hookAddress libraryPath functionName\r\n");
 		return 3;
 	}
 
@@ -240,14 +240,18 @@ int main(int argc, const char* argv[])
 
 	HookInformation hookInformation;
 	memset(&hookInformation, 0, sizeof(hookInformation));
-	hookInformation.HookAddress = strtol(argv[2], NULL, 16) + GetModuleHandleInjection(hProcess, NULL);
-	strcpy(hookInformation.LibraryPath, argv[3]);
-	strcpy(hookInformation.FunctionName, argv[4]);
+
+	char moduleName[MAX_PATH];
+	strcpy(moduleName, argv[2]);
+
+	hookInformation.HookAddress = strtol(argv[3], NULL, 16) + GetModuleHandleInjection(hProcess, NULL);
+	strcpy(hookInformation.LibraryPath, argv[4]);
+	strcpy(hookInformation.FunctionName, argv[5]);
 
 	if (sizeof(hookInformation.AdditionalParameters) > 0)
 	{
-		for (int i = 0; i < sizeof(hookInformation.AdditionalParameters) / sizeof(hookInformation.AdditionalParameters[0]) && 5 + i < argc; i++)
-			strcpy_s(hookInformation.AdditionalParameters[i], argv[5 + i]);
+		for (int i = 0; i < sizeof(hookInformation.AdditionalParameters) / sizeof(hookInformation.AdditionalParameters[0]) && 6 + i < argc; i++)
+			strcpy_s(hookInformation.AdditionalParameters[i], argv[6 + i]);
 	}
 
 	void* data = VirtualAllocEx(hProcess, NULL, sizeof(hookInformation), MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
@@ -267,7 +271,7 @@ int main(int argc, const char* argv[])
 	//Don't free leave it because it is being used actively by python hooks
 	//VirtualFree(data, NULL, MEM_FREE);
 
-	printf("Unhook? (y/n)\r\n");
+	/*printf("Unhook? (y/n)\r\n");
 	std::string answer;
 	std::cin >> answer;
 
@@ -277,7 +281,7 @@ int main(int argc, const char* argv[])
 		hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)(hRemoteModule + unhookFunctionOffset), data, 0, NULL);
 		WaitForSingleObject(hThread, 10000);
 		CloseHandle(hThread);
-	}
+	}*/
 
 	return 0;
 }

@@ -68,8 +68,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\bin\$(PlatformShortName)\</OutDir>
-    <IntDir>$(ProjectDir)..\..\obj\$(PlatformShortName)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\bin\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\obj\$(PlatformShortName)\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\bin\$(PlatformShortName)\</OutDir>
-    <IntDir>$(ProjectDir)..\..\obj\$(PlatformShortName)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\bin\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\obj\$(PlatformShortName)\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
